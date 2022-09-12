@@ -1,0 +1,29 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Factory
+    network: fantom
+    source:
+      address: "0xC831A5cBfb4aC2Da5ed5B194385DFD9bF5bFcBa7"
+      abi: Factory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - PairCreated
+        - SetFeeTo
+        - SetFeeToSetter
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handlePairCreated
+        - event: SetFeeTo(indexed address,indexed address)
+          handler: handleSetFeeTo
+        - event: SetFeeToSetter(indexed address,indexed address)
+          handler: handleSetFeeToSetter
+      file: ./src/factory.ts
